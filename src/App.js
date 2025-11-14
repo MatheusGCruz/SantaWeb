@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState} from "react";
+import React from "react";
 import GoogleAuth from "./components/GoogleAuth";
 import { useLocalStorage } from "./auxiliary/useLocalStorage";
 import FlipCard from "./pages/FlipCard";
@@ -10,7 +10,6 @@ import ErrorPage from './pages/ErrorPage';
 
 function App() {
   const [token, setToken] = useLocalStorage("google_token", null);
-  const [hasToken] = useState(false);
 
   // useEffect(() => {
   //   const starCount = 160;
@@ -43,7 +42,7 @@ function App() {
         return( 
           <div className="App">
       <header className="App-header">          
-        <GoogleAuth token={token} hasToken={hasToken} setToken={setToken}/>
+        <GoogleAuth token={token} setToken={setToken} />
         is
           <ErrorPage/>
           </header></div>

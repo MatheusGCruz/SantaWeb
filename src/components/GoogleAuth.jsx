@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import useScreenSize from '../auxiliary/ScreenSize';
 
-const GoogleAuth = ({token, hasToken, setToken}) => {
+const GoogleAuth = ({token, setToken}) => {
   const screenSize = useScreenSize();
   
+  const handleCredentialResponse = useCallback((response) => {
+    setToken(response.credential);
+  },[setToken]);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -12,10 +15,6 @@ const GoogleAuth = ({token, hasToken, setToken}) => {
     script.defer = true;
     document.body.appendChild(script);
 
-    const handleCredentialResponse = (response) => {
-      setToken(response.credential);
-      hasToken = true;
-    };
 
     script.onload = () => {
       if (window.google) {
