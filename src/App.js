@@ -4,12 +4,11 @@ import React, {useEffect, useState, useRef} from "react";
 import GoogleAuth from "./components/GoogleAuth";
 import { getToken, setToken, clearToken  } from "./auxiliary/authCache";
 import { useLocalStorage } from "./auxiliary/useLocalStorage";
-import CardBack  from "./components/CardBack"
-import FlipCard from "./components/FlipCard";
+import FlipCard from "./pages/FlipCard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
 import GroupPage from "./pages/GroupPage";
 import PlayerPage from "./pages/PlayerPage";
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
   const [token, setToken] = useLocalStorage("google_token", null);
@@ -45,20 +44,26 @@ function App() {
   // }, []);
   
   if(!token ){
-        return <div><GoogleAuth token={token} hasToken={hasToken} setToken={setToken}/><p>Carregando...</p></div>;
+        return( 
+          <div className="App">
+      <header className="App-header">          
+        <GoogleAuth token={token} hasToken={hasToken} setToken={setToken}/>
+        is
+          <ErrorPage/>
+          </header></div>
+    );
   }
   return (
     <div className="App">
       <header className="App-header">
       <Router>
         <Routes>
-          <Route path="" element={<FlipCard token={token}/>} />
+          <Route path="" element={<FlipCard token={token} setToken={setToken}/>} />
           <Route path="/:groupId" element={<PlayerPage token={token}/>} />
           <Route path="/newGroup" element={<GroupPage token={token}/>} />
         </Routes>
       </Router>
       </header>
-      <div><GoogleAuth token={token} hasToken={hasToken} setToken={setToken}/><p>Carregando...</p></div>;
     </div>
   );
 }

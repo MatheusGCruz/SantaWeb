@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getToken, setToken } from "../auxiliary/authCache";
 import { useLocalStorage } from "../auxiliary/useLocalStorage";
-
+import useScreenSize from '../auxiliary/ScreenSize';
 
 const GoogleAuth = ({token, hasToken, setToken}) => {
-
-  
+  const screenSize = useScreenSize();
   
   useEffect(() => {
     const script = document.createElement("script");
@@ -42,7 +41,8 @@ const GoogleAuth = ({token, hasToken, setToken}) => {
     hasToken = true;
   };
 
-  return <div id="googleSignInDiv"></div>;
+  return (<div id="googleSignInDiv"
+  style={{ width: .6 * screenSize.width, height: .2 * screenSize.height}}></div>);
 };
 
 export default GoogleAuth;

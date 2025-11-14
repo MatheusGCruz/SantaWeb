@@ -5,9 +5,10 @@ import backImage from "../resources/back.jpg";
 import xmasBackImage from "../resources/xmasBack.png";
 import frontImage from "../resources/front.jpg";
 import useScreenSize from '../auxiliary/ScreenSize';
-import GroupCard from "./GroupCard";
+import ErrorPage from "./ErrorPage";
 
-const FlipCard = ({token}) => {
+
+const FlipCard = ({token, setToken}) => {
   const [flipped, setFlipped] = useState(false);
   const handleClick = () => setFlipped(!flipped);
   const screenSize = useScreenSize();
@@ -16,6 +17,8 @@ const FlipCard = ({token}) => {
   const currentGroup = items[currentIndex];
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLocked, setIsLocked] = useState(true);
+  const [lockedText, setLockedText] = useState("(🔒) Destravar");
 
   useEffect(() => {
     const sendPost = async () => {
@@ -41,23 +44,57 @@ const FlipCard = ({token}) => {
       setItems(mappedObjects);
       console.log("POST response:", response.data);
     } catch (error) {
+      setToken(null);
       console.error("POST error:", error);
     }
   };
   sendPost();
   },[]);
 
-  const onButtonClick = (e) => {
+  const onUnlockClick = (e) => {
     e.stopPropagation();       // <- prevents parent handler from running
     console.log("button clicked");
+    if(isLocked){
+        setIsLocked(false);
+        setLockedText("(🔓) Travar");
+    }else{
+      setIsLocked(true);
+        setLockedText("(🔒) Destravar");
+    }
+    
     // do button action here
+  };
+  const onButtonClick = async (e) => {
+    e.stopPropagation();       // <- prevents parent handler from running
+    console.log("button clicked");
+        try {
+        await axios.post(
+        "https://api.antares.ninja/santa/sorts",
+        {"googleToken":token,"groupId":currentGroup.groupId},
+        {headers: {"Content-Type": "application/json"}}
+      );
+    } catch (error) {
+      setToken(null);
+      console.error("POST error:", error);
+    }
   };
 
   const handleNextGroup = () => {setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);};
   const handlePreviousGroup = () => {setCurrentIndex((prevIndex) => prevIndex === 0 ? items.length - 1 : prevIndex - 1);};
+  const buttonStyle = {
+    display: "block",
+    textAlign: "center",
+    padding: .01 * screenSize.width,
+    fontSize: .025 * screenSize.height,
+    width: .3 * screenSize.width, 
+    height: .075 * screenSize.height, 
+    borderRadius: .1 * screenSize.height,
+    zIndex:9999
+  };
+
 
   if(items.length<=0){
-    return <div>Loading ....</div>
+    return (<div><ErrorPage/></div>);
   }
   return (
     <div>
@@ -83,7 +120,9 @@ const FlipCard = ({token}) => {
                       alt={currentGroup.groupName}
                     className="group-image"
                   /><br/>
-                      {currentGroup.admin && (<button onClick={onButtonClick} style={{ width: .3 * screenSize.width, height: .075 * screenSize.height, borderRadius:.1 * screenSize.height, zIndex: 9999}}>Sortear</button>)}
+                      {currentGroup.isSorted && ("🌟Grupo Sorteado🌟")}
+                      {currentGroup.admin && !currentGroup.isSorted && (<button onClick={onUnlockClick} style={buttonStyle}>{lockedText}</button>)}
+                      {currentGroup.admin && !isLocked && !currentGroup.isSorted &&(<button onClick={onButtonClick} style={buttonStyle}>Sortear</button>)}
             </div>
           </div>
         </div>

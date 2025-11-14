@@ -28,6 +28,7 @@ const GoogleLoader = () => {
   return (
     <div>
       {/* Google button will render here */}
+      Sigin
       <div
         className="g-signin2"
         data-onsuccess="onSignIn"

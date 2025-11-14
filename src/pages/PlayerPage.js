@@ -89,7 +89,7 @@ const GroupPage = ({token}) => {
         <h1 className="text-2xl font-bold mb-4 text-center">
           Parabens
         </h1>
-          <h2>Seu apelido no grupo é <i><b>{nickName}</b></i> </h2>
+          <h2>Seu apelido no grupo <i><b>{groupName}</b></i> é <i><b>{nickName}</b></i> </h2>
         </div>
 
           <Link to="/" style={inputStyle}>
@@ -106,7 +106,7 @@ const GroupPage = ({token}) => {
           Bem vindo!
         </h2>
         <h4>
-          Voê foi convidado a participar de um novo grupo. {groupId}
+          Voê foi convidado a participar de um novo grupo. {groupName}
         </h4>
         <h4>Escolha seu apelido e envie para participar</h4>
 
