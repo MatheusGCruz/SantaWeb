@@ -30,7 +30,7 @@ const GoogleAuth = ({token, hasToken, setToken}) => {
     return () => {
       document.body.removeChild(script);
     };
-  }, []);
+  }, [handleCredentialResponse]);
 
   const handleCredentialResponse = (response) => {
         setToken(response.credential);
