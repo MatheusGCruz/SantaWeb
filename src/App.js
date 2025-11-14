@@ -43,7 +43,6 @@ function App() {
           <div className="App">
       <header className="App-header">          
         <GoogleAuth token={token} setToken={setToken} />
-        is
           <ErrorPage/>
           </header></div>
     );
