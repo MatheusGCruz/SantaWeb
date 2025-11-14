@@ -6,10 +6,8 @@ import useScreenSize from '.././auxiliary/ScreenSize';
 import { Link } from "react-router-dom";
 
 const GroupPage = ({token}) => {
-  const { username } = useParams();
   const [groupName, setGroupName] = useState("");
   const [nickName, setNickName] = useState("");
-  const [postResponse, setPostResponse] = useState("");
   const [isCreating, setIsCreating] = useState(true);
   const screenSize = useScreenSize();
 
@@ -27,7 +25,7 @@ const GroupPage = ({token}) => {
     try {
       console.log("GroupName:", groupName);
       console.log("NickName:", nickName);
-      const response = await axios.post(
+      await axios.post(
         "https://api.antares.ninja/santa/newSanta",
         {
           "googleToken":token,

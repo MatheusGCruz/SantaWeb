@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { getToken, setToken } from "../auxiliary/authCache";
-import { useLocalStorage } from "../auxiliary/useLocalStorage";
+import React, { useEffect } from "react";
 import useScreenSize from '../auxiliary/ScreenSize';
 
 const GoogleAuth = ({token, hasToken, setToken}) => {

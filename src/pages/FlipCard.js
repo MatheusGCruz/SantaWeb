@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/FlipCard.css"; // We'll define styles here
 import axios from "axios";
-import backImage from "../resources/back.jpg";
 import xmasBackImage from "../resources/xmasBack.png";
 import frontImage from "../resources/front.jpg";
 import useScreenSize from '../auxiliary/ScreenSize';
@@ -15,8 +14,6 @@ const FlipCard = ({token, setToken}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [items, setItems] = useState([]);
   const currentGroup = items[currentIndex];
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [isLocked, setIsLocked] = useState(true);
   const [lockedText, setLockedText] = useState("(🔒) Destravar");
 
@@ -49,7 +46,7 @@ const FlipCard = ({token, setToken}) => {
     }
   };
   sendPost();
-  },[]);
+  },[token, setToken]);
 
   const onUnlockClick = (e) => {
     e.stopPropagation();       // <- prevents parent handler from running
@@ -103,7 +100,7 @@ const FlipCard = ({token, setToken}) => {
           <div> <button className="previous-button" style={{ width: .075 * screenSize.width, height: .8 * screenSize.height }} onClick={handlePreviousGroup}/></div>
         <div className={`flip-card ${flipped ? "":"flipped"}`}  onClick={handleClick}>
           <div className="flip-card-front">
-            <img src={frontImage} alt="Front Image" />
+            <img src={frontImage} alt="Front card face" />
             <div className="center-text" style={{borderRadius:.05 * screenSize.height}}>{currentGroup.groupName}
               <br /><br />Seu Apelido:
               <br />{currentGroup.nickName}
@@ -112,7 +109,7 @@ const FlipCard = ({token, setToken}) => {
             </div>
           </div>
           <div className="flip-card-back">
-            <img src={xmasBackImage} alt="Back Image" style={{backgroundColor:"transparent"}}/>
+            <img src={xmasBackImage} alt="Back card face" style={{backgroundColor:"transparent"}}/>
             <div className="center-text" style={{borderRadius:.05 * screenSize.height}}>Nome do Grupo <br /> {currentGroup.groupName}
             <br/><br/>
                   <img style={{ width: .3 * screenSize.width, height: .3 * screenSize.height, borderRadius:.1 * screenSize.height}}
