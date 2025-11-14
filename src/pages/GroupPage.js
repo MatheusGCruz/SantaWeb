@@ -1,6 +1,5 @@
 // LoginPage.js
 import React, {useState} from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import useScreenSize from '.././auxiliary/ScreenSize';
 import { Link } from "react-router-dom";
@@ -23,8 +22,6 @@ const GroupPage = ({token}) => {
 
     const sendPost = async () => {
     try {
-      console.log("GroupName:", groupName);
-      console.log("NickName:", nickName);
       await axios.post(
         "https://api.antares.ninja/santa/newSanta",
         {

@@ -9,7 +9,6 @@ const GroupPage = ({token}) => {
   const { groupId } = useParams();
   const [nickName, setNickName] = useState("");
   const [groupName, setGroupName] = useState("");
-  const [postResponse, setPostResponse] = useState("");
   const [isCreating, setIsCreating] = useState(true);
   const [isValidId, setIsValidId] = useState(false);
   const screenSize = useScreenSize();
@@ -45,12 +44,12 @@ const GroupPage = ({token}) => {
     }
   };
   initialPost();
-  },[]);
+  },[groupId]);
 
 
     const sendPost = async () => {
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://api.antares.ninja/santa/newPlayer",
         {
           "googleToken":token,
