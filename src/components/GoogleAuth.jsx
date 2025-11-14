@@ -4,12 +4,18 @@ import useScreenSize from '../auxiliary/ScreenSize';
 const GoogleAuth = ({token, hasToken, setToken}) => {
   const screenSize = useScreenSize();
   
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://accounts.google.com/gsi/client";
     script.async = true;
     script.defer = true;
     document.body.appendChild(script);
+
+    const handleCredentialResponse = (response) => {
+      setToken(response.credential);
+      hasToken = true;
+    };
 
     script.onload = () => {
       if (window.google) {
@@ -32,12 +38,7 @@ const GoogleAuth = ({token, hasToken, setToken}) => {
     };
   }, [handleCredentialResponse]);
 
-  const handleCredentialResponse = (response) => {
-        setToken(response.credential);
-    console.log("Encoded JWT ID token: " + response.credential);
-    // You can decode this JWT to extract user info (name, email, picture)
-    hasToken = true;
-  };
+
 
   return (<div id="googleSignInDiv"
   style={{ width: .6 * screenSize.width, height: .2 * screenSize.height}}></div>);
