@@ -5,7 +5,7 @@ import xmasBackImage from "../resources/xmasBack.png";
 import frontImage from "../resources/front.jpg";
 import useScreenSize from '../auxiliary/ScreenSize';
 import ErrorPage from "./ErrorPage";
-
+import GoogleAuth from "../components/GoogleAuth";
 
 const FlipCard = ({token, setToken}) => {
   const [flipped, setFlipped] = useState(false);
@@ -91,7 +91,8 @@ const FlipCard = ({token, setToken}) => {
 
 
   if(items.length<=0){
-    return (<div><ErrorPage/></div>);
+    return (<div><GoogleAuth token={token} setToken={setToken} />
+                <ErrorPage/></div>);
   }
   return (
     <div>
