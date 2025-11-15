@@ -6,6 +6,8 @@ const GoogleAuth = ({token, setToken}) => {
   
   const handleCredentialResponse = useCallback((response) => {
     setToken(response.credential);
+    const payload = JSON.parse(atob(response.credential.split(".")[1]));
+    console.log(payload.locale);
   },[setToken]);
 
   useEffect(() => {
