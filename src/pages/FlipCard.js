@@ -113,10 +113,10 @@ const FlipCard = ({token, setToken}) => {
             <img src={xmasBackImage} alt="Back card face" style={{backgroundColor:"transparent"}}/>
             <div className="center-text" style={{borderRadius:.05 * screenSize.height}}>Nome do Grupo <br /> {currentGroup.groupName}
             <br/><br/>
-                  <img style={{ width: .3 * screenSize.width, height: .3 * screenSize.height, borderRadius:.1 * screenSize.height}}
+                  <img style={{ width: .3 * screenSize.width, height: .3 * screenSize.width, borderRadius:.1 * screenSize.height}}
                       src={`data:image/png;base64,${currentGroup.base64}`}
                       alt={currentGroup.groupName}
-                    className="group-image"
+                    className="qrcode-image"
                   /><br/>
                       {currentGroup.isSorted && ("🌟Grupo Sorteado🌟")}
                       {currentGroup.admin && !currentGroup.isSorted && (<button onClick={onUnlockClick} style={buttonStyle}>{lockedText}</button>)}
